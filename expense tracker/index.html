@@ -1,0 +1,260 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="theme-color" content="#10131c">
+  <meta name="description" content="Simple personal Expense Tracker">
+
+  <title>Expense Tracker</title>
+
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="apple-touch-icon" href="logo.png">
+  <link rel="manifest" href="manifest.json">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="app">
+
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-icon">
+          <img src="logo.png" alt="Expense Tracker Logo">
+        </div>
+
+        <div>
+          <h1>Expense Tracker</h1>
+          <p>Personal Finance Manager</p>
+        </div>
+      </div>
+
+      <button id="themeToggle" class="theme-btn" aria-label="Toggle theme">☀️</button>
+    </header>
+
+    <main>
+
+      <section class="welcome">
+        <div>
+          <p class="eyebrow">YOUR FINANCES</p>
+          <h2>Dashboard</h2>
+          <p class="muted">Track your money. Stay in control.</p>
+        </div>
+
+        <div class="date-label" id="todayDate"></div>
+      </section>
+
+      <section class="summary-grid">
+
+        <article class="summary-card balance-card">
+          <p>Total Balance</p>
+          <h2 id="balance">₹0.00</h2>
+          <span>Available balance</span>
+        </article>
+
+        <article class="summary-card">
+          <p>Total Income</p>
+          <h2 id="income">₹0.00</h2>
+          <span class="positive">↗ Money received</span>
+        </article>
+
+        <article class="summary-card">
+          <p>Total Expenses</p>
+          <h2 id="expenses">₹0.00</h2>
+          <span class="negative">↘ Money spent</span>
+        </article>
+
+      </section>
+
+      <!-- MONTHLY REPORT -->
+
+      <section class="panel report-panel">
+
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">MONTHLY OVERVIEW</p>
+            <h3>Monthly Report</h3>
+          </div>
+
+          <input type="month" id="reportMonth">
+        </div>
+
+        <div class="summary-grid monthly-grid">
+
+          <article class="summary-card">
+            <p>Monthly Income</p>
+            <h2 id="monthlyIncome">₹0.00</h2>
+          </article>
+
+          <article class="summary-card">
+            <p>Monthly Expenses</p>
+            <h2 id="monthlyExpenses">₹0.00</h2>
+          </article>
+
+          <article class="summary-card">
+            <p>Monthly Savings</p>
+            <h2 id="monthlySavings">₹0.00</h2>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- CHARTS -->
+
+      <section class="analytics-grid">
+
+        <section class="panel">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">VISUAL ANALYSIS</p>
+              <h3>Expense Chart</h3>
+            </div>
+          </div>
+
+          <div id="expenseChart" class="expense-chart">
+            <p class="muted">No expense data for this month.</p>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">SPENDING BREAKDOWN</p>
+              <h3>Category Analysis</h3>
+            </div>
+          </div>
+
+          <div id="categoryAnalysis" class="category-analysis">
+            <p class="muted">No category data available.</p>
+          </div>
+        </section>
+
+      </section>
+
+      <!-- TRANSACTIONS -->
+
+      <section class="content-grid">
+
+        <section class="panel">
+
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">TRANSACTIONS</p>
+              <h3>Add Transaction</h3>
+            </div>
+          </div>
+
+          <form id="transactionForm">
+
+            <label for="title">Transaction name</label>
+            <input
+              id="title"
+              type="text"
+              placeholder="e.g. Grocery shopping"
+              maxlength="60"
+              required
+            >
+
+            <label for="amount">Amount (₹)</label>
+            <input
+              id="amount"
+              type="number"
+              placeholder="Enter amount"
+              min="0.01"
+              step="0.01"
+              required
+            >
+
+            <div class="form-row">
+
+              <div>
+                <label for="type">Type</label>
+                <select id="type">
+                  <option value="expense">Expense</option>
+                  <option value="income">Income</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="category">Category</label>
+                <select id="category">
+                  <option>Food</option>
+                  <option>Shopping</option>
+                  <option>Transport</option>
+                  <option>Bills</option>
+                  <option>Health</option>
+                  <option>Education</option>
+                  <option>Entertainment</option>
+                  <option>Salary</option>
+                  <option>Other</option>
+                </select>
+              </div>
+
+            </div>
+
+            <label for="date">Date</label>
+            <input id="date" type="date" required>
+
+            <button type="submit" class="primary-btn" id="submitBtn">
+              + Add Transaction
+            </button>
+
+            <button type="button" class="cancel-btn hidden" id="cancelEdit">
+              Cancel Edit
+            </button>
+
+          </form>
+        </section>
+
+        <section class="panel transactions-panel">
+
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">YOUR ACTIVITY</p>
+              <h3>Recent Transactions</h3>
+            </div>
+
+            <button id="exportBtn" class="export-btn">Export CSV</button>
+          </div>
+
+          <div class="filters">
+            <input
+              id="search"
+              type="search"
+              placeholder="Search transactions..."
+            >
+
+            <select id="filterType">
+              <option value="all">All types</option>
+              <option value="income">Income</option>
+              <option value="expense">Expenses</option>
+            </select>
+          </div>
+
+          <div id="transactionList" class="transaction-list">
+
+            <div class="empty-state">
+              <span>📊</span>
+              <p>No transactions yet</p>
+              <small>Add your first transaction to get started.</small>
+            </div>
+
+          </div>
+        </section>
+
+      </section>
+
+      <footer>
+        <p>Expense Tracker · Your money, your control.</p>
+        <button id="clearAll" class="clear-btn">Clear All Data</button>
+      </footer>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
